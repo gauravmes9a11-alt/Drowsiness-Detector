@@ -42,7 +42,7 @@ Drowsiness_Arduino.ino Upload to Arduino via Arduino IDE
 |---|---|
 | Computer Vision | OpenCV, MediaPipe Face Mesh |
 | Eye Detection | Eye Aspect Ratio (EAR) algorithm |
-| Microcontroller | Arduino Uno / Nano |
+| Microcontroller | Arduino Uno / Nano / ESP32 |
 | Sensors | HC-SR04 Ultrasonic, IR Proximity, LM35 Temperature Sensor |
 | Output | Active Buzzer, LED |
 | Serial Comms | PySerial (9600 baud) |
