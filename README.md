@@ -2,14 +2,6 @@
 
 > A hybrid AI + hardware safety system that detects driver drowsiness in real-time using computer vision on a laptop and an Arduino-based sensor module alerting the driver before an accident happens.
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)
-![Arduino](https://img.shields.io/badge/Arduino-Uno%2FNano-teal?logo=arduino)
-![OpenCV](https://img.shields.io/badge/OpenCV-4.9-green?logo=opencv)
-![MediaPipe](https://img.shields.io/badge/MediaPipe-0.10-orange)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
-
----
-
 ## Overview
 
 This project combines **computer vision** (running on a laptop) with **physical sensors** (on an Arduino) to create a robust, low-cost drowsiness detection system.
