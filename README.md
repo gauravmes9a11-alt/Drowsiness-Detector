@@ -2,7 +2,7 @@
 
 > A hybrid AI + hardware safety system that detects driver drowsiness in real-time using computer vision on a laptop and an Arduino-based sensor module alerting the driver before an accident happens.
 
-## 1. Team Information
+## Team Information
 | Name | SRN |
 |------|-----|
 | Harshitha.B.T | PES1UG24AM118 |
