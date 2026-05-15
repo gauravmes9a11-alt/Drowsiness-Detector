@@ -1,0 +1,9 @@
+# Driver Drowsiness Detection - Python Requirements
+# Install with: pip install -r requirements.txt
+
+opencv-python==4.9.0.80
+mediapipe==0.10.11
+numpy==1.26.4
+scipy==1.13.0
+pyserial==3.5
+imutils==0.5.4
