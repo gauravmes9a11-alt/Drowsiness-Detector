@@ -1,4 +1,4 @@
-# 🚗 Driver Drowsiness Detection System
+#  Driver Drowsiness Detection System
 
 > A hybrid AI + hardware safety system that detects driver drowsiness in real-time using computer vision on a laptop and a multi-sensor ESP32 module — and alerts the driver before an accident happens.
 
@@ -10,21 +10,21 @@
 
 ---
 
-## 📌 Overview
+##  Overview
 
 This project combines **computer vision** (running on a laptop) with **physical sensors** (on an ESP32 microcontroller) to create a robust, low-cost drowsiness detection system. The laptop camera tracks eye closure using the Eye Aspect Ratio (EAR) algorithm via MediaPipe, while the ESP32 monitors head tilt, proximity, temperature, pulse, and vibration — triggering buzzer alerts for any anomaly.
 
 ### Key Features
-- 👁️ **Real-time eye tracking** using MediaPipe Face Mesh + EAR algorithm
-- 📡 **Bidirectional serial communication** between laptop and ESP32
-- 🌡️ **Multi-sensor fusion** — tilt, ultrasonic, IR, DHT11, pulse, vibration
-- 🔔 **Smart buzzer patterns** — different alerts for different danger levels (yawn, drowsy, SOS)
-- 🎯 **Calibration tool** to personalise EAR threshold to your eyes
-- ⚡ **Works without hardware** — camera-only mode if ESP32 is not connected
+- **Real-time eye tracking** using MediaPipe Face Mesh + EAR algorithm
+- **Bidirectional serial communication** between laptop and ESP32
+- **Multi-sensor fusion** — tilt, ultrasonic, IR, DHT11, pulse, vibration
+- **Smart buzzer patterns** — different alerts for different danger levels (yawn, drowsy, SOS)
+- **Calibration tool** to personalise EAR threshold to your eyes
+- **Works without hardware** — camera-only mode if ESP32 is not connected
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 drowsiness_detection/
@@ -42,7 +42,7 @@ drowsiness_detection/
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -55,7 +55,7 @@ drowsiness_detection/
 
 ---
 
-## ⚙️ Setup & Installation
+##  Setup & Installation
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -111,7 +111,7 @@ ESP32 Pin   →   Component
 ──────────────────────────────────────
 GPIO 34     →   Tilt Sensor (SW-520D)
 GPIO 5      →   HC-SR04 TRIG
-GPIO 18     →   HC-SR04 ECHO  ⚠️ Use voltage divider (1kΩ + 2kΩ)
+GPIO 18     →   HC-SR04 ECHO   Use voltage divider (1kΩ + 2kΩ)
 GPIO 35     →   IR Proximity OUT
 GPIO 4      →   DHT11 DATA  (+ 10kΩ pull-up to 3.3V)
 GPIO 36     →   Pulse Sensor Signal (Analog)
@@ -144,7 +144,7 @@ GND         →   All sensor GNDs
 
 ---
 
-## 🚨 Buzzer Alert Patterns
+##  Buzzer Alert Patterns
 
 | Situation | Pattern |
 |---|---|
@@ -170,7 +170,7 @@ Open `laptop/drowsiness_detector.py` and adjust these parameters:
 
 ---
 
-## 🛠️ Troubleshooting
+##  Troubleshooting
 
 **Camera not opening**
 → Change `cv2.VideoCapture(0)` to `(1)` or `(2)`
@@ -189,7 +189,7 @@ Open `laptop/drowsiness_detector.py` and adjust these parameters:
 
 ---
 
-## 📦 Components List
+##  Components List
 
 | Component | Qty |
 |---|---|
@@ -209,13 +209,13 @@ Open `laptop/drowsiness_detector.py` and adjust these parameters:
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to change.
 
 ---
 
-## 📄 License
+##  License
 
 This project is licensed under the [MIT License](LICENSE).
 
