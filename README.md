@@ -225,10 +225,4 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 ---
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-*Developed as an MPCA project for low-cost driver safety monitoring using a hybrid AI + hardware architecture.*
+*Developed as an MPCA project for low-cost driver safety monitoring using a hybrid AI + hardware architecture + Computer Vision.*
