@@ -1,5 +1,26 @@
 # 🚗 Driver Drowsiness Detection System
-### Laptop (AI) + ESP32 (Hardware) Hybrid System
+
+> A hybrid AI + hardware safety system that detects driver drowsiness in real-time using computer vision on a laptop and a multi-sensor ESP32 module — and alerts the driver before an accident happens.
+
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)
+![Arduino](https://img.shields.io/badge/Arduino-ESP32-teal?logo=arduino)
+![OpenCV](https://img.shields.io/badge/OpenCV-4.9-green?logo=opencv)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-0.10-orange)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
+---
+
+## 📌 Overview
+
+This project combines **computer vision** (running on a laptop) with **physical sensors** (on an ESP32 microcontroller) to create a robust, low-cost drowsiness detection system. The laptop camera tracks eye closure using the Eye Aspect Ratio (EAR) algorithm via MediaPipe, while the ESP32 monitors head tilt, proximity, temperature, pulse, and vibration — triggering buzzer alerts for any anomaly.
+
+### Key Features
+- 👁️ **Real-time eye tracking** using MediaPipe Face Mesh + EAR algorithm
+- 📡 **Bidirectional serial communication** between laptop and ESP32
+- 🌡️ **Multi-sensor fusion** — tilt, ultrasonic, IR, DHT11, pulse, vibration
+- 🔔 **Smart buzzer patterns** — different alerts for different danger levels (yawn, drowsy, SOS)
+- 🎯 **Calibration tool** to personalise EAR threshold to your eyes
+- ⚡ **Works without hardware** — camera-only mode if ESP32 is not connected
 
 ---
 
@@ -9,10 +30,10 @@
 drowsiness_detection/
 │
 ├── laptop/
-│   ├── drowsiness_detector.py   ← MAIN script (run this)
-│   ├── serial_monitor.py        ← Debug: view ESP32 sensor data
+│   ├── drowsiness_detector.py   ← MAIN script — run this
 │   ├── calibrate_ear.py         ← Calibrate EAR threshold for your eyes
-│   └── requirements.txt         ← Python packages
+│   ├── serial_monitor.py        ← Debug: view live ESP32 sensor data
+│   └── requirements.txt         ← Python dependencies
 │
 └── esp32/
     └── esp32_main/
@@ -21,160 +42,183 @@ drowsiness_detection/
 
 ---
 
-## ⚙️ SETUP INSTRUCTIONS
+## 🛠️ Tech Stack
 
-### STEP 1 — Install Python Libraries
-```bash
-pip install -r requirements.txt
-```
-
-### STEP 2 — Upload ESP32 Code
-1. Open **Arduino IDE**
-2. Go to: `File → Open → esp32_main.ino`
-3. Install board: `Tools → Board → ESP32 Dev Module`
-4. Install library: **DHT sensor library** by Adafruit
-5. Select correct port and upload
-
-### STEP 3 — Calibrate EAR Threshold
-```bash
-python calibrate_ear.py
-```
-Follow on-screen instructions, then update `EAR_THRESHOLD` in `drowsiness_detector.py`
-
-### STEP 4 — Run Main System
-```bash
-python drowsiness_detector.py
-```
+| Layer | Technology |
+|---|---|
+| Computer Vision | OpenCV, MediaPipe Face Mesh |
+| Eye Detection | Eye Aspect Ratio (EAR) algorithm |
+| Microcontroller | ESP32 Dev Board |
+| Sensors | HC-SR04, DHT11, IR, SW-520D, SW-420, Pulse Sensor |
+| Serial Comms | PySerial (9600 baud) |
+| Language | Python 3.8+, C++ (Arduino) |
 
 ---
 
-## 🔌 ESP32 WIRING DIAGRAM
+## ⚙️ Setup & Installation
 
-```
-ESP32 Pin    →   Component
-─────────────────────────────────────────
-GPIO 34      →   Tilt Sensor (SW-520D) Signal
-GPIO 5       →   HC-SR04 TRIG
-GPIO 18      →   HC-SR04 ECHO
-GPIO 35      →   IR Proximity OUT
-GPIO 4       →   DHT11 DATA
-GPIO 36      →   Pulse Sensor Signal (Analog)
-GPIO 39      →   Vibration Sensor (SW-420) OUT
-GPIO 26      →   Buzzer (+) Positive
-GND          →   All sensor GNDs
-3.3V / 5V   →   All sensor VCC (check datasheet)
-```
+### Prerequisites
+- Python 3.8 or higher
+- Arduino IDE (for ESP32 upload)
+- A USB webcam
+- ESP32 Dev Board (optional — system works in camera-only mode)
 
-### HC-SR04 Wiring:
-```
-VCC  → 5V
-GND  → GND
-TRIG → GPIO 5
-ECHO → GPIO 18 (use voltage divider: 1kΩ + 2kΩ for 3.3V protection)
+---
+
+### Step 1 — Clone the Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/drowsiness-detection.git
+cd drowsiness-detection
 ```
 
-### DHT11 Wiring:
-```
-VCC  → 3.3V
-GND  → GND
-DATA → GPIO 4 (add 10kΩ pull-up resistor to 3.3V)
+### Step 2 — Install Python Dependencies
+
+```bash
+pip install -r laptop/requirements.txt
 ```
 
-### Pulse Sensor Wiring:
-```
-VCC  → 3.3V
-GND  → GND
-SIG  → GPIO 36 (analog input)
+### Step 3 — Upload ESP32 Code *(skip if no hardware)*
+
+1. Open **Arduino IDE**
+2. Go to `File → Open` and select `esp32/esp32_main/esp32_main.ino`
+3. Install the board: `Tools → Board → ESP32 Dev Module`
+4. Install library: **DHT sensor library** by Adafruit (Library Manager)
+5. Select the correct COM port and click **Upload**
+
+### Step 4 — Calibrate EAR Threshold *(recommended)*
+
+```bash
+python laptop/calibrate_ear.py
 ```
 
-### Buzzer Wiring:
+Follow the on-screen instructions (keep eyes open for 5s, then closed for 5s). The script will print the recommended `EAR_THRESHOLD` value — update it in `drowsiness_detector.py`.
+
+### Step 5 — Run the System
+
+```bash
+python laptop/drowsiness_detector.py
 ```
-(+) → GPIO 26
-(-) → GND
-(Add NPN transistor like 2N2222 if buzzer needs 5V)
+
+> If the ESP32 is connected, update the `SERIAL_PORT` in `drowsiness_detector.py` to match your COM port (e.g. `COM3` on Windows, `/dev/ttyUSB0` on Linux/Mac).
+
+---
+
+## 🔌 ESP32 Wiring Diagram
+
+```
+ESP32 Pin   →   Component
+──────────────────────────────────────
+GPIO 34     →   Tilt Sensor (SW-520D)
+GPIO 5      →   HC-SR04 TRIG
+GPIO 18     →   HC-SR04 ECHO  ⚠️ Use voltage divider (1kΩ + 2kΩ)
+GPIO 35     →   IR Proximity OUT
+GPIO 4      →   DHT11 DATA  (+ 10kΩ pull-up to 3.3V)
+GPIO 36     →   Pulse Sensor Signal (Analog)
+GPIO 39     →   Vibration Sensor (SW-420)
+GPIO 26     →   Buzzer (+) Positive
+GND         →   All sensor GNDs
+3.3V / 5V  →   All sensor VCC (check individual datasheets)
 ```
 
 ---
 
 ## 📡 Serial Communication Protocol
 
-| Laptop → ESP32 | Meaning              |
-|----------------|----------------------|
-| `DROWSY\n`     | Eyes closed too long |
-| `YAWN\n`       | Yawn detected        |
-| `SAFE\n`       | Driver is alert      |
+### Laptop → ESP32
 
-| ESP32 → Laptop        | Meaning               |
-|-----------------------|-----------------------|
-| `SENSORS\|DIST:...\|` | Periodic sensor dump  |
-| `ALERT\|reason`       | Hardware alert fired  |
-| `WARN\|reason`        | Warning condition     |
-| `ESP32_READY`         | Boot confirmation     |
+| Command | Meaning |
+|---|---|
+| `DROWSY\n` | Eyes closed too long |
+| `YAWN\n` | Yawn detected |
+| `SAFE\n` | Driver is alert |
 
----
+### ESP32 → Laptop
 
-## 🔧 Configuration (drowsiness_detector.py)
-
-| Parameter         | Default | Description                          |
-|-------------------|---------|--------------------------------------|
-| `EAR_THRESHOLD`   | 0.25    | Eye Aspect Ratio threshold           |
-| `EAR_CONSEC_FRAMES` | 20   | Frames before drowsy alert           |
-| `YAWN_THRESHOLD`  | 0.6     | Mouth Aspect Ratio threshold         |
-| `SERIAL_PORT`     | COM3    | Change to /dev/ttyUSB0 on Linux/Mac  |
-| `ALERT_COOLDOWN`  | 5       | Seconds between repeated alerts      |
+| Message | Meaning |
+|---|---|
+| `SENSORS\|DIST:...\|...` | Periodic sensor data dump |
+| `ALERT\|reason` | Hardware alert triggered |
+| `WARN\|reason` | Warning condition |
+| `ESP32_READY` | Boot confirmation |
 
 ---
 
-## 🚨 Alert Patterns (Buzzer)
+## 🚨 Buzzer Alert Patterns
 
-| Situation             | Pattern              |
-|-----------------------|----------------------|
-| Yawn detected         | 2 beeps              |
-| Eyes closed (drowsy)  | 5 rapid beeps        |
-| Tilt + Drowsy         | SOS pattern          |
-| High temperature      | 2 long beeps         |
-| Pulse anomaly         | 3 medium beeps       |
+| Situation | Pattern |
+|---|---|
+| Yawn detected | 2 medium beeps |
+| Eyes closed (drowsy) | 5 rapid beeps |
+| Tilt + Drowsy | SOS pattern (· · · — — — · · ·) |
+| High temperature | 2 long beeps |
+| Pulse anomaly | 3 medium beeps |
+
+---
+
+## 🔧 Configuration Reference
+
+Open `laptop/drowsiness_detector.py` and adjust these parameters:
+
+| Parameter | Default | Description |
+|---|---|---|
+| `EAR_THRESHOLD` | `0.25` | Eye closure threshold (calibrate first!) |
+| `EAR_CONSEC_FRAMES` | `20` | Frames of closed eyes before alert |
+| `YAWN_THRESHOLD` | `0.6` | Mouth Aspect Ratio threshold |
+| `SERIAL_PORT` | `COM3` | Change to `/dev/ttyUSB0` on Linux/Mac |
+| `ALERT_COOLDOWN` | `5` | Seconds between repeated alerts |
 
 ---
 
 ## 🛠️ Troubleshooting
 
-**Camera not opening:**
-- Change `cv2.VideoCapture(0)` to `VideoCapture(1)` or `VideoCapture(2)`
+**Camera not opening**
+→ Change `cv2.VideoCapture(0)` to `(1)` or `(2)`
 
-**Serial not connecting:**
-- Check Device Manager for correct COM port
-- Ensure no other app is using the port
-- Try baud rate 115200 if 9600 fails
+**Serial port not found**
+→ Check Device Manager for the correct port; close any other apps using it
 
-**Face not detected:**
-- Ensure good lighting on face
-- Sit closer to camera (30–70 cm)
+**Face not detected**
+→ Ensure good lighting on your face; sit 30–70 cm from camera
 
-**DHT11 reading NaN:**
-- Check pull-up resistor (10kΩ)
-- Try swapping DATA and GND pins
+**DHT11 reading NaN**
+→ Check the 10kΩ pull-up resistor; try swapping DATA and GND pins
 
----
-
-## 📦 Components Shopping List
-
-| Component             | Quantity |
-|-----------------------|----------|
-| ESP32 Dev Board       | 1        |
-| USB Webcam            | 1        |
-| HC-SR04 Ultrasonic    | 1        |
-| IR Proximity Module   | 1        |
-| Tilt Sensor SW-520D   | 1        |
-| DHT11 Module          | 1        |
-| Pulse Sensor          | 1        |
-| Vibration SW-420      | 1        |
-| Active Buzzer 5V      | 1        |
-| 10kΩ Resistors        | 3        |
-| 1kΩ, 2kΩ Resistors   | 1 each   |
-| Breadboard + Wires    | —        |
-| USB Cable (ESP32)     | 1        |
+**High BPM / erratic pulse readings**
+→ The pulse sensor requires peak detection for accuracy; current implementation uses a rolling average for basic estimation
 
 ---
 
-*Developed for low-cost driver safety monitoring using hybrid AI + hardware architecture.*
+## 📦 Components List
+
+| Component | Qty |
+|---|---|
+| ESP32 Dev Board | 1 |
+| USB Webcam | 1 |
+| HC-SR04 Ultrasonic Sensor | 1 |
+| IR Proximity Module | 1 |
+| Tilt Sensor SW-520D | 1 |
+| DHT11 Temperature Module | 1 |
+| Pulse Sensor | 1 |
+| Vibration Sensor SW-420 | 1 |
+| Active Buzzer 5V | 1 |
+| 10kΩ Resistors | 3 |
+| 1kΩ + 2kΩ Resistors (voltage divider) | 1 each |
+| Breadboard + Jumper Wires | — |
+| USB Cable (for ESP32) | 1 |
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to change.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+*Built as an MPCA project for low-cost driver safety monitoring using a hybrid AI + hardware architecture.*
