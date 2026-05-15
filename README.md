@@ -4,7 +4,7 @@
 
 ## Overview
 
-This project combines **computer vision** (running on a laptop) with **physical sensors** (on an Arduino) to create a robust, low-cost drowsiness detection system.
+This project combines **computer vision** (running on a laptop) with **physical sensors** (on an Arduino or ESP32) to create a robust, low-cost drowsiness detection system.
 
 The laptop camera tracks eye closure in real time using the **Eye Aspect Ratio (EAR)** algorithm via MediaPipe. When drowsiness is detected, Python sends a serial signal (`1` or `0`) to the Arduino, which immediately activates a **buzzer and LED alert**. The Arduino also continuously reads an ultrasonic sensor, IR proximity sensor, and temperature sensor, sending debug data back to the laptop.
 
@@ -14,6 +14,7 @@ The laptop camera tracks eye closure in real time using the **Eye Aspect Ratio (
 - **Multi-sensor monitoring** ultrasonic distance, IR proximity, temperature
 - **Instant buzzer + LED alert** when drowsiness is detected
 - **EAR calibration tool** to personalise the threshold to your eyes
+- **Compatible with Arduino Uno/Nano and ESP32**
 - **Works without Arduino** camera-only mode if hardware is not connected
 
 ---
@@ -56,7 +57,7 @@ Drowsiness_Arduino.ino Upload to Arduino via Arduino IDE
 - Python 3.8 or higher
 - Arduino IDE
 - A USB webcam
-- Arduino Uno/Nano *(optional system works in camera-only mode)*
+- Arduino Uno/Nano/ESP32 *(optional system works in camera-only mode)*
 
 ---
 
