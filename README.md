@@ -2,6 +2,13 @@
 
 > A hybrid AI + hardware safety system that detects driver drowsiness in real-time using computer vision on a laptop and an Arduino-based sensor module alerting the driver before an accident happens.
 
+## 1. Team Information
+| Name | SRN |
+|------|-----|
+| Harshitha.B.T | PES1UG24AM118 |
+| Gaurav Shivakumar | PES1UG24AM104 |
+
+
 ## Overview
 
 This project combines **computer vision** (running on a laptop) with **physical sensors** (on an Arduino or ESP32) to create a robust, low-cost drowsiness detection system.
